@@ -45,7 +45,14 @@ public class SecurityConfig {
                                 ex.authenticationEntryPoint(authenticationEntrypoint)
                 )
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/api/v1/non").permitAll()
+                        .requestMatchers(
+                                "/api/public/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/swagger-resources/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
