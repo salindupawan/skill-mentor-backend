@@ -31,10 +31,8 @@ public class SubjectServiceImpl implements SubjectService {
     public List<SubjectResponse> getSubjects() {
         List<Subject> all = subjectRepository.findAll();
 
-        List<SubjectResponse> collect = all.stream().map(this::map)
+        return all.stream().map(this::map)
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
     @Transactional
