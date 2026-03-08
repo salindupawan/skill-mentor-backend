@@ -1,6 +1,7 @@
 package com.salindupawan.skill_mentor_backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
+@Data
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,9 @@ public class Student {
 
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

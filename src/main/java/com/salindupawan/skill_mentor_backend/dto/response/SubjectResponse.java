@@ -11,4 +11,5 @@ public class SubjectResponse {
     private Long mentorId;
     private String mentorName;
     private String subjectImageUrl;
+    private Long noOfEnrollments;
 }
