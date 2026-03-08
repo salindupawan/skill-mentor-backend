@@ -11,8 +11,9 @@ import java.util.List;
 @Table(name = "student")
 public class Student {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id", nullable = false, updatable = false, unique = true)
+    private Long studentId;
 
     @Column(name = "clerk_id",unique = true,nullable = false)
     private String clerkId;

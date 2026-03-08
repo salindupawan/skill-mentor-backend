@@ -10,8 +10,9 @@ import java.util.Date;
 @Table(name = "review")
 public class Review {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id", nullable = false, updatable = false, unique = true)
+    private Long reviewId;
 
     @Column(name = "comment", nullable = false)
     private String comment;

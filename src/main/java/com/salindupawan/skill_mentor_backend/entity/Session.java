@@ -13,8 +13,9 @@ import java.util.Date;
 @Data
 public class Session {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "session_id", nullable = false, updatable = false, unique = true)
+    private Long sessionId;
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)

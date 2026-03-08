@@ -10,8 +10,9 @@ import java.util.List;
 @Data
 public class Mentor {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mentor_id", nullable = false, updatable = false, unique = true)
+    private Long mentorId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
