@@ -1,5 +1,6 @@
 package com.salindupawan.skill_mentor_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -54,5 +55,6 @@ public class Mentor {
     private String specialization;
 
     @OneToMany(mappedBy = "mentor")
+    @JsonIgnore
     private List<Review> reviews;
 }
