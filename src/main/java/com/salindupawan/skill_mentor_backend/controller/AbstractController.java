@@ -3,6 +3,7 @@ package com.salindupawan.skill_mentor_backend.controller;
 
 
 import com.salindupawan.skill_mentor_backend.dto.response.ErrorResponse;
+import com.salindupawan.skill_mentor_backend.exception.ResourceNotFoundException;
 import com.salindupawan.skill_mentor_backend.exception.SkillMentorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,19 @@ public class AbstractController {
     @ExceptionHandler(SkillMentorException.class)
     public ResponseEntity<ErrorResponse> handleSkillMentorException(
             SkillMentorException ex) {
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message(ex.getMessage())
+                .errorCode(ex.getStatus().toString())
+                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, ex.getStatus());
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+            ResourceNotFoundException ex) {
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .message(ex.getMessage())

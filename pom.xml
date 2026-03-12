@@ -132,6 +132,27 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.7.0</version>
 		</dependency>
+
+		<!-- Supabase Storage Client -->
+		<dependency>
+			<groupId>io.github.jan-tennert.supabase</groupId>
+			<artifactId>storage-kt</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<!-- OkHttp for HTTP requests -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.12.0</version>
+		</dependency>
+
+		<!-- Apache Commons IO for file utilities -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.15.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

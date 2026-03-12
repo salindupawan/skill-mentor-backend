@@ -2,16 +2,19 @@ package com.salindupawan.skill_mentor_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "review")
+@Data
 public class Review {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id", nullable = false, updatable = false, unique = true)
+    private Long reviewId;
 
     @Column(name = "comment", nullable = false)
     private String comment;

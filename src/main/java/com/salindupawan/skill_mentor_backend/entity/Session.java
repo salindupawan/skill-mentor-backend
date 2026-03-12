@@ -2,19 +2,27 @@ package com.salindupawan.skill_mentor_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "session")
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"student","mentor","subject"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Session {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "session_id", nullable = false, updatable = false, unique = true)
+    private Long sessionId;
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
@@ -31,8 +39,11 @@ public class Session {
     @JsonIgnore
     private Subject subject;
 
-    @Column(name = "session_at", nullable = false)
-    private Date sessionAt;
+    @Column(name = "session_date", nullable = false)
+    private LocalDate sessionDate;
+
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
 
     @Column(name = "duration_minutes")
     private Integer durationMinutes;
