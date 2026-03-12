@@ -6,6 +6,7 @@ import com.salindupawan.skill_mentor_backend.service.MentorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,7 @@ public class MentorController extends AbstractController {
     }
 
     @GetMapping(path = "/{mentor-id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public MentorResponse getMentorById(@PathVariable("mentor-id") Long mentorId) {
         return mentorService.getMentorById(mentorId);
     }

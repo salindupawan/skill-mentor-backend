@@ -6,6 +6,7 @@ import com.salindupawan.skill_mentor_backend.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public class SubjectController extends AbstractController {
     }
 
     @GetMapping
-    public List<SubjectResponse> getSubjects() {
-        return subjectService.getSubjects();
+    public ResponseEntity<List<SubjectResponse>> getSubjects() {
+        return ResponseEntity.ok(subjectService.getSubjects());
     }
 }

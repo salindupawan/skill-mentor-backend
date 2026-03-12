@@ -8,8 +8,8 @@ public class SubjectResponse {
     private Long subjectId;
     private String subjectName;
     private String description;
-    private Long mentorId;
-    private String mentorName;
     private String subjectImageUrl;
     private Long noOfEnrollments;
+    private MentorResponse mentor;
+
 }

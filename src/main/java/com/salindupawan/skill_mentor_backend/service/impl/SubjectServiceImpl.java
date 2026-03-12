@@ -1,8 +1,11 @@
 package com.salindupawan.skill_mentor_backend.service.impl;
 
 import com.salindupawan.skill_mentor_backend.dto.request.CreateSubjectRequest;
+import com.salindupawan.skill_mentor_backend.dto.response.MentorResponse;
+import com.salindupawan.skill_mentor_backend.dto.response.ReviewResponse;
 import com.salindupawan.skill_mentor_backend.dto.response.SubjectResponse;
 import com.salindupawan.skill_mentor_backend.entity.Mentor;
+import com.salindupawan.skill_mentor_backend.entity.Review;
 import com.salindupawan.skill_mentor_backend.entity.Subject;
 import com.salindupawan.skill_mentor_backend.exception.ResourceNotFoundException;
 import com.salindupawan.skill_mentor_backend.repository.MentorRepository;
@@ -57,9 +60,20 @@ public class SubjectServiceImpl implements SubjectService {
 
     private SubjectResponse map(Subject subject) {
         SubjectResponse map = modelMapper.map(subject, SubjectResponse.class);
-
-        map.setMentorId(subject.getMentor().getMentorId());
-        map.setMentorName(subject.getMentor().getFirstName() + " " + subject.getMentor().getLastName());
+        MentorResponse mentor = modelMapper.map(subject.getMentor(), MentorResponse.class);
+        mentor.setReviews(subject.getMentor().getReviews().stream().map(this::map).toList());
+        map.setMentor(mentor);
         return map;
+    }
+
+    private ReviewResponse map(Review review) {
+        return ReviewResponse.builder()
+                .comment(review.getComment())
+                .reviewDate(review.getCreatedAt())
+                .rating(review.getRating())
+                .reviewerFirstName(review.getStudent().getFirstName())
+                .reviewerLastName(review.getStudent().getLastName())
+                .reviewerProfileImageUrl(review.getStudent().getProfileImageUrl())
+                .build();
     }
 }
