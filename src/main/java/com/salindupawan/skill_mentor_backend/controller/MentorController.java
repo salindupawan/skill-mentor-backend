@@ -30,7 +30,6 @@ public class MentorController extends AbstractController {
     }
 
     @GetMapping(path = "/{mentor-id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public MentorResponse getMentorById(@PathVariable("mentor-id") Long mentorId) {
         return mentorService.getMentorById(mentorId);
     }
