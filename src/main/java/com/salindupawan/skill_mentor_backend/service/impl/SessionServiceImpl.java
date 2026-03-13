@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class SessionServiceImpl implements SessionService {
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;
+    private final FileStorageService fileStorageService;
 
     @Override
     public SessionResponse enrollToSession(CreateSessionRequest session) {
@@ -72,6 +75,22 @@ public class SessionServiceImpl implements SessionService {
         modelMapper.map(request, existingSession);
 
         return map(sessionRepository.save(existingSession));
+    }
+
+    @Transactional
+    @Override
+    public SessionResponse makePayment(Long id, MultipartFile file) {
+        String url = fileStorageService.uploadFile(file);
+        PatchSessionRequest request = PatchSessionRequest.builder()
+                .paymentProofLink(url)
+                .build();
+
+        try {
+            return updateSessionStatus(id, request);
+        } catch (Exception e) {
+            fileStorageService.deleteFile(url);
+            throw new RuntimeException(e);
+        }
     }
 
     private SessionResponse map(Session session) {
