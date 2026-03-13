@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,13 +48,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(
                                 "/api/public/**",
-                                "/api/v1/**",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/swagger-resources/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/mentors/").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/mentors").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/subjects/").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/subjects").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
