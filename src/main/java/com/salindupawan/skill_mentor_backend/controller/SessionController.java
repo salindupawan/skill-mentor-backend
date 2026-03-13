@@ -35,12 +35,12 @@ public class SessionController extends AbstractController {
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<SessionResponse>> getAllSessions(Pageable pageable) {
+    public ResponseEntity<List<SessionResponse>> getAllSessions(Pageable pageable) {
      return sendOkResponse(sessionService.getAllSessions(pageable));
     }
 
     @GetMapping("/enrolled")
-    public ResponseEntity<PagedModel<SessionResponse>> getMySessions(Pageable pageable, Authentication authentication) {
+    public ResponseEntity<List<SessionResponse>> getMySessions(Pageable pageable, Authentication authentication) {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
 
         assert principal != null;

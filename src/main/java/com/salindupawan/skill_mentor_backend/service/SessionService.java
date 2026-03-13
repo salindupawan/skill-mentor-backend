@@ -8,10 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface SessionService {
     SessionResponse enrollToSession(CreateSessionRequest session);
-    PagedModel<SessionResponse> getAllSessions(Pageable pageable);
-    PagedModel<SessionResponse> getMySessions(String clerkId, Pageable pageable);
+    List<SessionResponse> getAllSessions(Pageable pageable);
+    List<SessionResponse> getMySessions(String clerkId, Pageable pageable);
     SessionResponse updateSessionStatus(Long id, PatchSessionRequest request);
 
     SessionResponse makePayment(Long id, MultipartFile file);
