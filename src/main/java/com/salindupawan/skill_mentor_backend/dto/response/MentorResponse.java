@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class MentorResponse {
+        private String mentorId;
         private String firstName;
         private String lastName;
         private String email;
