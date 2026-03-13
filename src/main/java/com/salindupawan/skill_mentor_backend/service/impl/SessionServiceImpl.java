@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
@@ -58,13 +60,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public PagedModel<SessionResponse> getAllSessions(Pageable pageable) {
-        return new PagedModel<>(sessionRepository.findAll(pageable).map(this::map));
+    public List<SessionResponse> getAllSessions(Pageable pageable) {
+        return sessionRepository.findAll(pageable).stream().map(this::map).toList();
     }
 
     @Override
-    public PagedModel<SessionResponse> getMySessions(String clerkId, Pageable pageable) {
-        return new PagedModel<>(sessionRepository.findSessionsByStudent_ClerkId(clerkId, pageable).map(this::map));
+    public List<SessionResponse> getMySessions(String clerkId, Pageable pageable) {
+        return sessionRepository.findSessionsByStudent_ClerkId(clerkId, pageable).stream().map(this::map).toList();
     }
 
     @Override
