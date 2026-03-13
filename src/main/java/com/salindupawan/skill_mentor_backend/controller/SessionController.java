@@ -9,9 +9,11 @@ import com.salindupawan.skill_mentor_backend.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -49,5 +51,10 @@ public class SessionController extends AbstractController {
     public ResponseEntity<SessionResponse> updateSession(@PathVariable Long id, @RequestBody PatchSessionRequest patchSessionRequest) {
         System.out.println("patchSessionRequest: " + patchSessionRequest.toString());
         return sendOkResponse(sessionService.updateSessionStatus(id, patchSessionRequest));
+    }
+
+    @PatchMapping(path = "/payment/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SessionResponse> makePayment(@PathVariable Long id, @RequestPart("file") MultipartFile file) {
+        return ResponseEntity.ok(sessionService.makePayment(id, file));
     }
 }
