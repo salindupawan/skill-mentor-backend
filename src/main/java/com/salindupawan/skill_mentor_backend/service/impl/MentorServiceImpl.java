@@ -6,6 +6,7 @@ import com.salindupawan.skill_mentor_backend.dto.response.ReviewResponse;
 import com.salindupawan.skill_mentor_backend.dto.response.SubjectResponse;
 import com.salindupawan.skill_mentor_backend.entity.Mentor;
 import com.salindupawan.skill_mentor_backend.entity.Review;
+import com.salindupawan.skill_mentor_backend.entity.SessionStatus;
 import com.salindupawan.skill_mentor_backend.entity.Subject;
 import com.salindupawan.skill_mentor_backend.exception.ResourceNotFoundException;
 import com.salindupawan.skill_mentor_backend.repository.MentorRepository;
@@ -48,7 +49,13 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public List<MentorResponse> getMentors() {
-       return mentorRepository.findAll().stream().map(mentor -> modelMapper.map(mentor, MentorResponse.class)).toList();
+       return mentorRepository.findAll().stream().map(mentor -> {
+           List<ReviewResponse> reviews = reviewRepository.findReviewsByMentor_MentorId(mentor.getMentorId())
+                   .stream().map(this::map).toList();
+           MentorResponse map = modelMapper.map(mentor, MentorResponse.class);
+           map.setReviews(reviews);
+           return map;
+       }).toList();
     }
 
     @Override
@@ -63,7 +70,7 @@ public class MentorServiceImpl implements MentorService {
         List<SubjectResponse> subjects = subjectRepository.findSubjectsByMentor_MentorId(mentor.getMentorId())
                 .stream().map(s -> {
                     SubjectResponse map = modelMapper.map(s, SubjectResponse.class);
-                    map.setNoOfEnrollments(sessionRepository.countDistinctStudentsBySubjectId(s.getSubjectId()));
+                    map.setNoOfEnrollments(sessionRepository.countSessionBySubject_SubjectIdAndSessionStatusNot(s.getSubjectId(), SessionStatus.REJECTED));
                     return map;
                 }).toList();
         resp.setSubjects(subjects);
