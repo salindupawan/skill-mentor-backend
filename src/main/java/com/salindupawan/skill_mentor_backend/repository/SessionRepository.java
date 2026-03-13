@@ -23,6 +23,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     boolean existsByMentor_MentorIdAndSessionDateAndStartTimeAndSessionStatusNot(Long mentorMentorId, LocalDate sessionDate, LocalTime startTime, SessionStatus sessionStatus);
 
     Page<Session> findSessionsByStudent_ClerkId(String studentClerkId, Pageable pageable);
+    
+    long countSessionBySubject_SubjectIdAndSessionStatusNot(Long subjectSubjectId, SessionStatus sessionStatus);
 
 
 }
