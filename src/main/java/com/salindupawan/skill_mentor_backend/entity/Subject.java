@@ -17,7 +17,7 @@ public class Subject {
     @Column(name = "subject_id", nullable = false, updatable = false, unique = true)
     private Long subjectId;
 
-    @Column(nullable = false, name = "subject_name", length = 20)
+    @Column(nullable = false, name = "subject_name", columnDefinition = "TEXT")
     private String subjectName;
 
     @Column(nullable = false)

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CreateStudentRequest {
-    private String studentProfileUrl;
-    private String studentFirstName;
-    private String studentLastName;
-    private String studentEmail;
-    private String studentClerkId;
+    private String profileImageUrl;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String clerkId;
 }
