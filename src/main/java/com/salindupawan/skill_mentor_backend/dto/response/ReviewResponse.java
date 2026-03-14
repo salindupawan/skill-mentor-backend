@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewResponse {
+    private Long reviewId;
     private String reviewerProfileImageUrl;
     private String comment;
     private Integer rating;

@@ -24,10 +24,12 @@ public class StudentController extends AbstractController{
         UserPrincipal student = (UserPrincipal) authentication.getPrincipal();
 
         assert student != null;
-        request.setStudentEmail(student.getEmail());
-        request.setStudentFirstName(student.getFirstName());
-        request.setStudentLastName(student.getLastName());
-        request.setStudentClerkId(student.getId());
+        request.setEmail(student.getEmail());
+        request.setFirstName(student.getFirstName());
+        request.setLastName(student.getLastName());
+        request.setClerkId(student.getId());
+
+        System.out.println("controller"+request.toString());
 
         studentService.createStudent(request);
         return sendCreatedResponse("Student created successfully");
