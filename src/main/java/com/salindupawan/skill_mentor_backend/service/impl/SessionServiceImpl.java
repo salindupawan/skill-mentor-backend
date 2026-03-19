@@ -103,6 +103,9 @@ public class SessionServiceImpl implements SessionService {
                 .mentorName(session.getMentor().getFirstName()+" "+session.getMentor().getLastName())
                 .sessionTitle(session.getSubject().getSubjectName())
                 .sessionStatus(session.getSessionStatus().name())
+                .PaymentStatus(session.getPaymentStatus().name())
+                .studentName(session.getStudent().getFirstName()+" "+session.getStudent().getLastName())
+                .paymentProofLink(session.getPaymentProofLink())
                 .startTime(session.getStartTime())
                 .build();
 
