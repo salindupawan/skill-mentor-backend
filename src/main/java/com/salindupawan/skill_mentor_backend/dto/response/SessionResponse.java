@@ -17,9 +17,12 @@ import java.util.Date;
 public class SessionResponse {
     private Long sessionId;
     private String mentorName;
+    private String studentName;
+    private String PaymentStatus;
     private String sessionStatus;
     private String sessionTitle;
     private String sessionImageUrl;
     private LocalDate sessionDate;
     private LocalTime startTime;
+    private String paymentProofLink;
 }

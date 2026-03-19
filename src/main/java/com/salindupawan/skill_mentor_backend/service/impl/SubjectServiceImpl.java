@@ -6,9 +6,11 @@ import com.salindupawan.skill_mentor_backend.dto.response.ReviewResponse;
 import com.salindupawan.skill_mentor_backend.dto.response.SubjectResponse;
 import com.salindupawan.skill_mentor_backend.entity.Mentor;
 import com.salindupawan.skill_mentor_backend.entity.Review;
+import com.salindupawan.skill_mentor_backend.entity.SessionStatus;
 import com.salindupawan.skill_mentor_backend.entity.Subject;
 import com.salindupawan.skill_mentor_backend.exception.ResourceNotFoundException;
 import com.salindupawan.skill_mentor_backend.repository.MentorRepository;
+import com.salindupawan.skill_mentor_backend.repository.SessionRepository;
 import com.salindupawan.skill_mentor_backend.repository.SubjectRepository;
 import com.salindupawan.skill_mentor_backend.service.SubjectService;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +30,16 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final MentorRepository mentorRepository;
     private final FileStorageService fileStorageService;
+    private final SessionRepository sessionRepository;
 
     @Override
     public List<SubjectResponse> getSubjects() {
         List<Subject> all = subjectRepository.findAll();
 
-        return all.stream().map(this::map)
+        return all.stream().map((subject -> {
+                    long count = sessionRepository.countSessionBySubject_SubjectIdAndSessionStatusNot(subject.getSubjectId(), SessionStatus.REJECTED);
+                    return map(subject, count);
+                }))
                 .collect(Collectors.toList());
     }
 
@@ -58,11 +64,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     }
 
-    private SubjectResponse map(Subject subject) {
+    private SubjectResponse map(Subject subject, Long noOfEnrollments) {
         SubjectResponse map = modelMapper.map(subject, SubjectResponse.class);
         MentorResponse mentor = modelMapper.map(subject.getMentor(), MentorResponse.class);
         mentor.setReviews(subject.getMentor().getReviews().stream().map(this::map).toList());
         map.setMentor(mentor);
+        map.setNoOfEnrollments(noOfEnrollments);
         return map;
     }
 
