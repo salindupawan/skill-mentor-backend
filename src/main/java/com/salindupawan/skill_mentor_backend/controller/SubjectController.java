@@ -19,10 +19,9 @@ public class SubjectController extends AbstractController {
     private final SubjectService subjectService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createSubject(@RequestPart("details") @Valid CreateSubjectRequest subject, @RequestPart("image") MultipartFile image) {
-        System.out.println(subject.toString());
-        SubjectResponse subject1 = subjectService.createSubject(subject, image);
-        System.out.println(subject1.toString());
+    public ResponseEntity<SubjectResponse> createSubject(@RequestPart("details") @Valid CreateSubjectRequest subject, @RequestPart("image") MultipartFile image) {
+        return ResponseEntity.ok(subjectService.createSubject(subject, image));
+
     }
 
     @GetMapping
