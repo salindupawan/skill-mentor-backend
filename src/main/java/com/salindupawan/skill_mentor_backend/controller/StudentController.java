@@ -29,8 +29,6 @@ public class StudentController extends AbstractController{
         request.setLastName(student.getLastName());
         request.setClerkId(student.getId());
 
-        System.out.println("controller"+request.toString());
-
         studentService.createStudent(request);
         return sendCreatedResponse("Student created successfully");
     }
